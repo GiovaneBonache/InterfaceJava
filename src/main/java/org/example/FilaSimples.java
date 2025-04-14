@@ -1,5 +1,9 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class FilaSimples implements IEstruturaSimples {
     private Object[] elementos;
     private int inicio;
@@ -18,7 +22,7 @@ public class FilaSimples implements IEstruturaSimples {
     public FilaSimples() {
         this(10); // Capacidade padrão de 10
     }
-
+//parte joao
     @Override
     public void inserirElemento(Object elemento) {
         if (estaCheia()) {
@@ -66,19 +70,42 @@ public class FilaSimples implements IEstruturaSimples {
         // Não aplicável para fila (viola o princípio FIFO)
         throw new UnsupportedOperationException("Remoção por índice não suportada em fila");
     }
-
+/*
     @Override
     public void removerSequencia(Object elementos) {
         // Não aplicável para fila (viola o princípio FIFO)
         throw new UnsupportedOperationException("Remoção de sequência não suportada em fila");
     }
+*/
+@Override
+public void removerSequencia(Object elementos) {
+    if (!(elementos instanceof Object[])) {
+        throw new IllegalArgumentException("O parâmetro deve ser um array de objetos");
+    }
+
+    Set<Object> conjuntoRemover = new HashSet<>(Arrays.asList((Object[]) elementos));
+    Object[] novaFila = new Object[capacidade];
+    int novoTamanho = 0;
+
+    for (int i = 0; i < tamanho; i++) {
+        int index = (inicio + i) % capacidade;
+        if (!conjuntoRemover.contains(this.elementos[index])) {
+            novaFila[novoTamanho++] = this.elementos[index];
+        }
+    }
+
+    this.elementos = novaFila;
+    this.inicio = 0;
+    this.fim = novoTamanho - 1;
+    this.tamanho = novoTamanho;
+}
 
     @Override
     public void removerTodasOcorrencias(Object elemento) {
         // Não aplicável para fila (viola o princípio FIFO)
         throw new UnsupportedOperationException("Remoção de ocorrências não suportada em fila");
     }
-
+    //parte lucca
     @Override
     public boolean estaCheia() {
         return tamanho == capacidade;
@@ -100,6 +127,7 @@ public class FilaSimples implements IEstruturaSimples {
         return false;
     }
 
+
     @Override
     public Object buscarElementoIndice(int indice) {
         if (indice < 0 || indice >= tamanho) {
@@ -107,11 +135,32 @@ public class FilaSimples implements IEstruturaSimples {
         }
         return elementos[(inicio + indice) % capacidade];
     }
-
+    /*
     @Override
     public void ordenarCrescente() {
         // Não aplicável para fila (viola o princípio FIFO)
         throw new UnsupportedOperationException("Ordenação não suportada em fila");
+    }
+*/
+
+    @Override
+    public void ordenarCrescente() {
+        if (estaVazia()) return;
+
+        Object[] copia = new Object[tamanho];
+
+        for (int i = 0; i < tamanho; i++) {
+            copia[i] = elementos[(inicio + i) % capacidade];
+        }
+
+        Arrays.sort(copia);
+
+        for (int i = 0; i < tamanho; i++) {
+            elementos[i] = copia[i];
+        }
+
+        inicio = 0;
+        fim = tamanho - 1;
     }
 
     @Override
@@ -124,7 +173,7 @@ public class FilaSimples implements IEstruturaSimples {
     public int quantidadeElementos() {
         return tamanho;
     }
-
+    //parte minha
     @Override
     public void dobrarCapacidade() {
         Object[] novoArray = new Object[capacidade * 2];
@@ -139,11 +188,25 @@ public class FilaSimples implements IEstruturaSimples {
         fim = tamanho - 1;
     }
 
+    /*
     @Override
     public void editarElemento(Object elementoAntigo, Object elementoNovo) {
         // Não aplicável para fila (viola o princípio FIFO)
         throw new UnsupportedOperationException("Edição de elementos não suportada em fila");
     }
+     */
+
+    @Override
+    public void editarElemento(Object elementoAntigo, Object elementoNovo) {
+        for (int i = 0; i < tamanho; i++) {
+            int index = (inicio + i) % capacidade;
+            if (elementos[index].equals(elementoAntigo)) {
+                elementos[index] = elementoNovo;
+                return;
+            }
+        }
+    }
+
 
     @Override
     public void limpar() {
