@@ -118,6 +118,9 @@ public class Main {
                     break;
 
                 case 15:
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("\n Teste 1");
                     fila.limpar();
                     fila.inserirSequencia(new Object[]{1, 2, 3, 4, 5, 6});
                     System.out.println("\n Essa é a sequencia inicial");
@@ -126,6 +129,10 @@ public class Main {
                     System.out.println("\n Essa é a nova sequencia");
                     fila.exibir();
 
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("\n Teste 2");
+
                     fila.limpar();
                     fila.inserirSequencia(new Object[]{1, 2, 3, 4, 5, 6});
                     System.out.println("\n Essa é a sequencia inicial");
@@ -133,8 +140,17 @@ public class Main {
                     fila.removerSequencia(new Object[]{5,8,9});
                     System.out.println("\n Essa é a nova sequencia");
                     fila.exibir();
-                    
 
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("\n Teste 3");
+                    fila.limpar();
+                    fila.inserirSequencia(new Object[]{1, 3, 3, 5, 5, 6});
+                    System.out.println("\n Essa é a sequencia inicial");
+                    fila.exibir();
+                    fila.removerSequencia(new Object[]{5,1});
+                    System.out.println("\n Essa é a nova sequencia");
+                    fila.exibir();
 
 
 

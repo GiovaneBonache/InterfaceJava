@@ -173,6 +173,19 @@ public void removerSequencia(Object elementos) {
     public int quantidadeElementos() {
         return tamanho;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
     //parte minha
     @Override
     public void dobrarCapacidade() {
